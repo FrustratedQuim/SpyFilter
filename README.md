@@ -23,3 +23,7 @@ When the game launches, SPY-chat is visible. Pressing the toggle key activates a
   - By Regex: `^SPY:.*?:.*$`
   - In plain terms: `SPY: username: message`
   - Also filters any messages containing `[SPY BOOK]` or `[SPY SIGN]`. These are not detected using Regex due to technical limitations — on the server, such messages may span multiple lines separated by `\n`.
+
+# modrinth
+
+- https://modrinth.com/mod/spyfilter
