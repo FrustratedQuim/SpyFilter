@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "spyfilter",
+	"version": "${version}",
+	"name": "SpyFilter",
+	"description": "Переключение видимости SPY-чата",
+	"authors": [
+		"ratger"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/spyfilter/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.ratger.SpyFilter"
+		],
+		"client": [
+			"com.ratger.SpyFilterClient"
+		]
+	},
+	"mixins": [
+		"spyfilter.mixins.json",
+		{
+			"config": "spyfilter.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": ">=1.21.0 <1.22.0",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
