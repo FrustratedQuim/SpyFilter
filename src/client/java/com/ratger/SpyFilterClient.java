@@ -8,13 +8,10 @@ import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minecraft.client.resource.language.I18n;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
 public class SpyFilterClient implements ClientModInitializer {
-	private static final Logger LOGGER = LoggerFactory.getLogger("spyfilter");
 	private static final Pattern SPY_MESSAGE_PATTERN = Pattern.compile("^SPY:.*?:.*$");
 	private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
@@ -30,40 +27,24 @@ public class SpyFilterClient implements ClientModInitializer {
 
 			if (SpyFilterKeyBindings.getSpyChatToggleKey().wasPressed()) {
 				SpyFilterKeyBindings.toggleSpyChat();
-				LOGGER.info("SpyChat toggled: isChatSpyVisible={}, isBookSpyVisible={}, isSignSpyVisible={}",
-						SpyFilterKeyBindings.isChatSpyVisible(),
-						SpyFilterKeyBindings.isBookSpyVisible(),
-						SpyFilterKeyBindings.isSignSpyVisible());
 				MinecraftClientAudiences.of().audience().sendActionBar(
 						MINI_MESSAGE.deserialize(buildStatusMessage())
 				);
 			}
 			if (SpyFilterKeyBindings.getBasicSpyToggleKey().wasPressed()) {
 				SpyFilterKeyBindings.toggleBasicSpy();
-				LOGGER.info("BasicSpy toggled: isChatSpyVisible={}, isBookSpyVisible={}, isSignSpyVisible={}",
-						SpyFilterKeyBindings.isChatSpyVisible(),
-						SpyFilterKeyBindings.isBookSpyVisible(),
-						SpyFilterKeyBindings.isSignSpyVisible());
 				MinecraftClientAudiences.of().audience().sendActionBar(
 						MINI_MESSAGE.deserialize(buildStatusMessage())
 				);
 			}
 			if (SpyFilterKeyBindings.getSpyBookToggleKey().wasPressed()) {
 				SpyFilterKeyBindings.toggleSpyBook();
-				LOGGER.info("SpyBook toggled: isChatSpyVisible={}, isBookSpyVisible={}, isSignSpyVisible={}",
-						SpyFilterKeyBindings.isChatSpyVisible(),
-						SpyFilterKeyBindings.isBookSpyVisible(),
-						SpyFilterKeyBindings.isSignSpyVisible());
 				MinecraftClientAudiences.of().audience().sendActionBar(
 						MINI_MESSAGE.deserialize(buildStatusMessage())
 				);
 			}
 			if (SpyFilterKeyBindings.getSpySignToggleKey().wasPressed()) {
 				SpyFilterKeyBindings.toggleSpySign();
-				LOGGER.info("SpySign toggled: isChatSpyVisible={}, isBookSpyVisible={}, isSignSpyVisible={}",
-						SpyFilterKeyBindings.isChatSpyVisible(),
-						SpyFilterKeyBindings.isBookSpyVisible(),
-						SpyFilterKeyBindings.isSignSpyVisible());
 				MinecraftClientAudiences.of().audience().sendActionBar(
 						MINI_MESSAGE.deserialize(buildStatusMessage())
 				);
@@ -75,12 +56,6 @@ public class SpyFilterClient implements ClientModInitializer {
 			boolean isBasicSpy = SPY_MESSAGE_PATTERN.matcher(rawMessage).matches();
 			boolean isSpyBook = rawMessage.contains("[SPY BOOK]");
 			boolean isSpySign = rawMessage.contains("[SPY SIGN]");
-			LOGGER.info("Message received: rawMessage='{}', isBasicSpy={}, isSpyBook={}, isSpySign={}",
-					rawMessage, isBasicSpy, isSpyBook, isSpySign);
-			LOGGER.info("Filter states: isChatSpyVisible={}, isBookSpyVisible={}, isSignSpyVisible={}",
-					SpyFilterKeyBindings.isChatSpyVisible(),
-					SpyFilterKeyBindings.isBookSpyVisible(),
-					SpyFilterKeyBindings.isSignSpyVisible());
 
 			if (isBasicSpy && !SpyFilterKeyBindings.isChatSpyVisible()) return false;
 			if (isSpyBook && !SpyFilterKeyBindings.isBookSpyVisible()) return false;
