@@ -30,32 +30,35 @@ public class SpyFilterKeyBindings {
             InputUtil.UNKNOWN_KEY.getCode(),
             "category.spyfilter"
     );
+    private static final KeyBinding SPY_SILENT_TOGGLE_KEY = new KeyBinding(
+            "key.spyfilter.toggle_spy_silent",
+            InputUtil.Type.KEYSYM,
+            InputUtil.UNKNOWN_KEY.getCode(),
+            "category.spyfilter"
+    );
 
     private static boolean isChatSpyVisible = true;
     private static boolean isBookSpyVisible = true;
     private static boolean isSignSpyVisible = true;
+    private static boolean isSilentSpyVisible = true;
 
     public static KeyBinding getSpyChatToggleKey() {
         return SPY_CHAT_TOGGLE_KEY;
     }
-
     public static KeyBinding getBasicSpyToggleKey() {
         return BASIC_SPY_TOGGLE_KEY;
     }
-
     public static KeyBinding getSpyBookToggleKey() {
         return SPY_BOOK_TOGGLE_KEY;
     }
-
-    public static KeyBinding getSpySignToggleKey() {
-        return SPY_SIGN_TOGGLE_KEY;
-    }
+    public static KeyBinding getSpySignToggleKey() { return SPY_SIGN_TOGGLE_KEY; }
+    public static KeyBinding getSpySilentToggleKey() { return SPY_SILENT_TOGGLE_KEY; }
 
     public static void toggleSpyChat() {
-
         isChatSpyVisible = !isChatSpyVisible;
         isBookSpyVisible = isChatSpyVisible;
         isSignSpyVisible = isChatSpyVisible;
+        isSilentSpyVisible = isChatSpyVisible;
     }
 
     public static void toggleBasicSpy() {
@@ -70,15 +73,18 @@ public class SpyFilterKeyBindings {
         isSignSpyVisible = !isSignSpyVisible;
     }
 
+    public static void toggleSpySilent() {
+        isSilentSpyVisible = !isSilentSpyVisible;
+    }
+
     public static boolean isChatSpyVisible() {
         return isChatSpyVisible;
     }
-
     public static boolean isBookSpyVisible() {
         return isBookSpyVisible;
     }
-
     public static boolean isSignSpyVisible() {
         return isSignSpyVisible;
     }
+    public static boolean isSilentSpyVisible() { return isSilentSpyVisible; }
 }
