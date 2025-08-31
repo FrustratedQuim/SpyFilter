@@ -21,6 +21,7 @@ public class SpyFilterClient implements ClientModInitializer {
 		KeyBindingHelper.registerKeyBinding(SpyFilterKeyBindings.getBasicSpyToggleKey());
 		KeyBindingHelper.registerKeyBinding(SpyFilterKeyBindings.getSpyBookToggleKey());
 		KeyBindingHelper.registerKeyBinding(SpyFilterKeyBindings.getSpySignToggleKey());
+		KeyBindingHelper.registerKeyBinding(SpyFilterKeyBindings.getSpySilentToggleKey());
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.player == null) return;
@@ -49,6 +50,12 @@ public class SpyFilterClient implements ClientModInitializer {
 						MINI_MESSAGE.deserialize(buildStatusMessage())
 				);
 			}
+			if (SpyFilterKeyBindings.getSpySilentToggleKey().wasPressed()) {
+				SpyFilterKeyBindings.toggleSpySilent();
+				MinecraftClientAudiences.of().audience().sendActionBar(
+						MINI_MESSAGE.deserialize(buildStatusMessage())
+				);
+			}
 		});
 
 		ClientReceiveMessageEvents.ALLOW_GAME.register((message, overlay) -> {
@@ -56,9 +63,11 @@ public class SpyFilterClient implements ClientModInitializer {
 			boolean isBasicSpy = SPY_MESSAGE_PATTERN.matcher(rawMessage).matches();
 			boolean isSpyBook = rawMessage.contains("[SPY BOOK]");
 			boolean isSpySign = rawMessage.contains("[SPY SIGN]");
+			boolean isSpySilent = rawMessage.contains("[Втихомолку]");
 
 			if (isBasicSpy && !SpyFilterKeyBindings.isChatSpyVisible()) return false;
 			if (isSpyBook && !SpyFilterKeyBindings.isBookSpyVisible()) return false;
+			if (isSpySilent && !SpyFilterKeyBindings.isSilentSpyVisible()) return false;
 			return !isSpySign || SpyFilterKeyBindings.isSignSpyVisible();
 		});
 	}
@@ -73,7 +82,10 @@ public class SpyFilterClient implements ClientModInitializer {
 						? "<dark_green>[<color:#00ff40>Book</color>]</dark_green> "
 						: "<dark_red>[<color:#FF1500>Book</color>]</dark_red> ") +
 				(SpyFilterKeyBindings.isSignSpyVisible()
-						? "<dark_green>[<color:#00ff40>Sign</color>]</dark_green>"
-						: "<dark_red>[<color:#FF1500>Sign</color>]</dark_red>");
+						? "<dark_green>[<color:#00ff40>Sign</color>]</dark_green> "
+						: "<dark_red>[<color:#FF1500>Sign</color>]</dark_red> ") +
+				(SpyFilterKeyBindings.isSilentSpyVisible()
+				? "<dark_green>[<color:#00ff40>Silent</color>]</dark_green>"
+				: "<dark_red>[<color:#FF1500>Silent</color>]</dark_red>");
 	}
 }
