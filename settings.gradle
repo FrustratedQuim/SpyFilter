@@ -11,7 +11,7 @@ pluginManagement {
 	resolutionStrategy {
 		eachPlugin {
 			if (requested.id.id == "fabric-loom") {
-				useVersion("1.11.4")
+				useVersion("1.14.10")
 			}
 		}
 	}
