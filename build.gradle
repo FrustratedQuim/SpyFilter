@@ -64,8 +64,20 @@ base {
 	archivesName = project.archives_base_name
 }
 
+
+ext.categoryBasedKeyBindingProfiles = [
+		'profile_mc_1_21_9_to_1_21_10',
+		'profile_mc_1_21_11'
+]
+ext.usesCategoryKeyBinding = categoryBasedKeyBindingProfiles.contains(selectedProfileName)
+
 loom {
 	splitEnvironmentSourceSets()
+
+	project.sourceSets.client.java.setSrcDirs([
+			'src/client/java',
+			usesCategoryKeyBinding ? 'src/client-profile-category/java' : 'src/client-profile-legacy/java'
+	])
 
 	mods {
 		"spyfilter" {

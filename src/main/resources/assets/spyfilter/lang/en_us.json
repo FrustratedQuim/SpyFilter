@@ -5,5 +5,6 @@
   "key.spyfilter.toggle_spy_book": "[3] Toggle SPY-BOOK visibility",
   "key.spyfilter.toggle_spy_sign": "[4] Toggle SPY-SIGN visibility",
   "key.spyfilter.toggle_spy_silent": "[5] Toggle Silent visibility",
-  "message.spyfilter.status": "SPY-chat visibility:"
+  "message.spyfilter.status": "SPY-chat visibility:",
+  "key.categories.spyfilter.spyfilter": "SpyFilter"
 }

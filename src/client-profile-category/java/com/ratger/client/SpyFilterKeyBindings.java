@@ -1,0 +1,108 @@
+package com.ratger.client;
+
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
+import org.lwjgl.glfw.GLFW;
+
+public class SpyFilterKeyBindings {
+
+    private static final KeyBinding.Category SPYFILTER_CATEGORY = KeyBinding.Category.create(
+            Identifier.of("spyfilter", "spyfilter")
+    );
+
+    private static final KeyBinding SPY_CHAT_TOGGLE_KEY = new KeyBinding(
+            "key.spyfilter.toggle_spy_chat",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_J,
+            SPYFILTER_CATEGORY
+    );
+    private static final KeyBinding BASIC_SPY_TOGGLE_KEY = new KeyBinding(
+            "key.spyfilter.toggle_basic_spy",
+            InputUtil.Type.KEYSYM,
+            InputUtil.UNKNOWN_KEY.getCode(),
+            SPYFILTER_CATEGORY
+    );
+    private static final KeyBinding SPY_BOOK_TOGGLE_KEY = new KeyBinding(
+            "key.spyfilter.toggle_spy_book",
+            InputUtil.Type.KEYSYM,
+            InputUtil.UNKNOWN_KEY.getCode(),
+            SPYFILTER_CATEGORY
+    );
+    private static final KeyBinding SPY_SIGN_TOGGLE_KEY = new KeyBinding(
+            "key.spyfilter.toggle_spy_sign",
+            InputUtil.Type.KEYSYM,
+            InputUtil.UNKNOWN_KEY.getCode(),
+            SPYFILTER_CATEGORY
+    );
+    private static final KeyBinding SPY_SILENT_TOGGLE_KEY = new KeyBinding(
+            "key.spyfilter.toggle_spy_silent",
+            InputUtil.Type.KEYSYM,
+            InputUtil.UNKNOWN_KEY.getCode(),
+            SPYFILTER_CATEGORY
+    );
+
+    private static boolean isChatSpyVisible = true;
+    private static boolean isBookSpyVisible = true;
+    private static boolean isSignSpyVisible = true;
+    private static boolean isSilentSpyVisible = true;
+
+    public static KeyBinding getSpyChatToggleKey() {
+        return SPY_CHAT_TOGGLE_KEY;
+    }
+
+    public static KeyBinding getBasicSpyToggleKey() {
+        return BASIC_SPY_TOGGLE_KEY;
+    }
+
+    public static KeyBinding getSpyBookToggleKey() {
+        return SPY_BOOK_TOGGLE_KEY;
+    }
+
+    public static KeyBinding getSpySignToggleKey() {
+        return SPY_SIGN_TOGGLE_KEY;
+    }
+
+    public static KeyBinding getSpySilentToggleKey() {
+        return SPY_SILENT_TOGGLE_KEY;
+    }
+
+    public static void toggleSpyChat() {
+        isChatSpyVisible = !isChatSpyVisible;
+        isBookSpyVisible = isChatSpyVisible;
+        isSignSpyVisible = isChatSpyVisible;
+        isSilentSpyVisible = isChatSpyVisible;
+    }
+
+    public static void toggleBasicSpy() {
+        isChatSpyVisible = !isChatSpyVisible;
+    }
+
+    public static void toggleSpyBook() {
+        isBookSpyVisible = !isBookSpyVisible;
+    }
+
+    public static void toggleSpySign() {
+        isSignSpyVisible = !isSignSpyVisible;
+    }
+
+    public static void toggleSpySilent() {
+        isSilentSpyVisible = !isSilentSpyVisible;
+    }
+
+    public static boolean isChatSpyVisible() {
+        return isChatSpyVisible;
+    }
+
+    public static boolean isBookSpyVisible() {
+        return isBookSpyVisible;
+    }
+
+    public static boolean isSignSpyVisible() {
+        return isSignSpyVisible;
+    }
+
+    public static boolean isSilentSpyVisible() {
+        return isSilentSpyVisible;
+    }
+}

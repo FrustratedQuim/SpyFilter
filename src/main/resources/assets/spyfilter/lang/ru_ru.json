@@ -5,5 +5,6 @@
   "key.spyfilter.toggle_spy_book": "[3] Видимость SPY-BOOK",
   "key.spyfilter.toggle_spy_sign": "[4] Видимость SPY-SIGN",
   "key.spyfilter.toggle_spy_silent": "[5] Видимость Втихомолку",
-  "message.spyfilter.status": "Видимость SPY-чата:"
+  "message.spyfilter.status": "Видимость SPY-чата:",
+  "key.categories.spyfilter.spyfilter": "SpyFilter"
 }
