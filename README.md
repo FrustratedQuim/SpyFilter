@@ -11,6 +11,8 @@
   - Простыми словами: `SPY: ник: сообщение`
   - Также все сообщения, в которых содержатся `[SPY BOOK]` & `[SPY SIGN]`. Их поиск не реализован по Regex паттерну из-за технических особенностей отображения на сервере, где может быть несколько строк с разделениями через `\n`.
 
+Конфиг с настройками хранится в `assets/spyfilter.yml`. Там можно настроить фильтрацию под себя.
+
 # SpyFilter-EN
 A simple mod that allows toggling the visibility of SPY-chat messages.  
 Originally made for the MineToday server to assist with moderation.
@@ -24,6 +26,8 @@ When the game launches, SPY-chat is visible. Pressing the toggle key activates a
   - In plain terms: `SPY: username: message`
   - Also filters any messages containing `[SPY BOOK]` or `[SPY SIGN]`. These are not detected using Regex due to technical limitations — on the server, such messages may span multiple lines separated by `\n`.
 
-# modrinth
+The configuration file is stored in `assets/spyfilter.yml`. You can customize the filtering here.
+
+# Modrinth
 
 - https://modrinth.com/mod/spyfilter

@@ -1,8 +1,63 @@
 plugins {
-	id 'fabric-loom' version "${loom_version}"
+	id 'fabric-loom'
 }
 
-version = project.mod_version
+ext.profiles = [
+	profile_mc_1_21_2_to_1_21_4: [
+		minecraftVersion : '1.21.4',
+		minecraftRange   : '>=1.21.2 <=1.21.4',
+		yarnMappings     : '1.21.4+build.8',
+		loaderVersion    : '0.16.9',
+		fabricVersion    : '0.119.3+1.21.4',
+		adventureVersion : '6.3.0',
+		versionSuffix    : 'mc1.21.4'
+	],
+	profile_mc_1_21_5: [
+		minecraftVersion : '1.21.5',
+		minecraftRange   : '=1.21.5',
+		yarnMappings     : '1.21.5+build.1',
+		loaderVersion    : '0.16.9',
+		fabricVersion    : '0.125.0+1.21.5',
+		adventureVersion : '6.4.0',
+		versionSuffix    : 'mc1.21.5'
+	],
+	profile_mc_1_21_6_to_1_21_8: [
+		minecraftVersion : '1.21.8',
+		minecraftRange   : '>=1.21.6 <=1.21.8',
+		yarnMappings     : '1.21.8+build.1',
+		loaderVersion    : '0.16.9',
+		fabricVersion    : '0.129.0+1.21.8',
+		adventureVersion : '6.6.0',
+		versionSuffix    : 'mc1.21.8'
+	],
+	profile_mc_1_21_9_to_1_21_10: [
+		minecraftVersion : '1.21.10',
+		minecraftRange   : '>=1.21.9 <=1.21.10',
+		yarnMappings     : '1.21.10+build.1',
+		loaderVersion    : '0.16.9',
+		fabricVersion    : '0.135.0+1.21.10',
+		adventureVersion : '6.7.0',
+		versionSuffix    : 'mc1.21.10'
+	],
+	profile_mc_1_21_11: [
+		minecraftVersion : '1.21.11',
+		minecraftRange   : '=1.21.11',
+		yarnMappings     : '1.21.11+build.4',
+		loaderVersion    : '0.16.9',
+		fabricVersion    : '0.141.3+1.21.11',
+		adventureVersion : '6.8.0',
+		versionSuffix    : 'mc1.21.11'
+	]
+]
+
+ext.selectedProfileName = (findProperty('buildProfile') ?: 'profile_mc_1_21_2_to_1_21_4') as String
+ext.selectedProfile = profiles[selectedProfileName]
+
+if (selectedProfile == null) {
+	throw new GradleException("Unknown buildProfile '${selectedProfileName}'. Available: ${profiles.keySet().join(', ')}")
+}
+
+version = "${project.mod_version}+${selectedProfile.versionSuffix}"
 group = project.maven_group
 
 base {
@@ -21,19 +76,25 @@ loom {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation(include("net.kyori:adventure-platform-fabric:6.3.0"))
+	minecraft "com.mojang:minecraft:${selectedProfile.minecraftVersion}"
+	mappings "net.fabricmc:yarn:${selectedProfile.yarnMappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${selectedProfile.loaderVersion}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${selectedProfile.fabricVersion}"
+	modImplementation(include("net.kyori:adventure-platform-fabric:${selectedProfile.adventureVersion}"))
 	modImplementation(include("org.yaml:snakeyaml:2.2"))
 }
 
 processResources {
-	inputs.property "version", project.version
+	inputs.property 'version', project.version
+	inputs.property 'minecraftRange', selectedProfile.minecraftRange
+	inputs.property 'loaderVersion', selectedProfile.loaderVersion
 
-	filesMatching("fabric.mod.json") {
-		expand "version": inputs.properties.version
+	filesMatching('fabric.mod.json') {
+		expand(
+			version: inputs.properties.version,
+			minecraftRange: inputs.properties.minecraftRange,
+			loaderVersion: inputs.properties.loaderVersion
+		)
 	}
 }
 
@@ -48,9 +109,20 @@ java {
 }
 
 jar {
-	inputs.property "archivesName", project.base.archivesName
+	inputs.property 'archivesName', project.base.archivesName
 
-	from("LICENSE") {
+	from('LICENSE') {
 		rename { "${it}_${inputs.properties.archivesName}" }
+	}
+}
+
+tasks.register('printBuildProfile') {
+	group = 'help'
+	description = 'Prints selected build profile and resolved dependency versions.'
+	doLast {
+		println "buildProfile=${selectedProfileName}"
+		selectedProfile.each { key, value ->
+			println "${key}=${value}"
+		}
 	}
 }
