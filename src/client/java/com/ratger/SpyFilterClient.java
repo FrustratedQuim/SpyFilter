@@ -9,10 +9,8 @@ import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minecraft.client.resource.language.I18n;
 
-import java.util.regex.Pattern;
 
 public class SpyFilterClient implements ClientModInitializer {
-	private static final Pattern SPY_MESSAGE_PATTERN = Pattern.compile("^SPY:.*?:.*$");
 	private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
 	@Override
@@ -60,10 +58,10 @@ public class SpyFilterClient implements ClientModInitializer {
 
 		ClientReceiveMessageEvents.ALLOW_GAME.register((message, overlay) -> {
 			String rawMessage = message.getString();
-			boolean isBasicSpy = SPY_MESSAGE_PATTERN.matcher(rawMessage).matches();
-			boolean isSpyBook = rawMessage.contains("[SPY BOOK]");
-			boolean isSpySign = rawMessage.contains("[SPY SIGN]");
-			boolean isSpySilent = rawMessage.contains("[Втихомолку]");
+			boolean isBasicSpy = SpyFilterConfig.getSpyChatPattern().matcher(rawMessage).matches();
+			boolean isSpyBook = rawMessage.contains(SpyFilterConfig.getSpyBookContains());
+			boolean isSpySign = rawMessage.contains(SpyFilterConfig.getSpySignContains());
+			boolean isSpySilent = rawMessage.contains(SpyFilterConfig.getSpySilentContains());
 
 			if (isBasicSpy && !SpyFilterKeyBindings.isChatSpyVisible()) return false;
 			if (isSpyBook && !SpyFilterKeyBindings.isBookSpyVisible()) return false;

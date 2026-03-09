@@ -6,5 +6,6 @@ public class SpyFilter implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		SpyFilterConfig.load();
 	}
 }
