@@ -74,16 +74,16 @@ public class SpyFilterClient implements ClientModInitializer {
 		String prefix = I18n.translate("message.spyfilter.status");
 		return "<gold>" + prefix + " " +
 				(SpyFilterKeyBindings.isChatSpyVisible()
-						? "<dark_green>[<color:#00ff40>Chat</color>]</dark_green> "
-						: "<dark_red>[<color:#FF1500>Chat</color>]</dark_red> ") +
+						? "<dark_green>[<color:#00ff40>" + SpyFilterConfig.getChatNamed() + "</color>]</dark_green> "
+						: "<dark_red>[<color:#FF1500>" + SpyFilterConfig.getChatNamed() + "</color>]</dark_red> ") +
 				(SpyFilterKeyBindings.isBookSpyVisible()
-						? "<dark_green>[<color:#00ff40>Book</color>]</dark_green> "
-						: "<dark_red>[<color:#FF1500>Book</color>]</dark_red> ") +
+						? "<dark_green>[<color:#00ff40>" + SpyFilterConfig.getBookNamed() + "</color>]</dark_green> "
+						: "<dark_red>[<color:#FF1500>" + SpyFilterConfig.getBookNamed() + "</color>]</dark_red> ") +
 				(SpyFilterKeyBindings.isSignSpyVisible()
-						? "<dark_green>[<color:#00ff40>Sign</color>]</dark_green> "
-						: "<dark_red>[<color:#FF1500>Sign</color>]</dark_red> ") +
+						? "<dark_green>[<color:#00ff40>" + SpyFilterConfig.getSignNamed() + "</color>]</dark_green> "
+						: "<dark_red>[<color:#FF1500>" + SpyFilterConfig.getSignNamed() + "</color>]</dark_red> ") +
 				(SpyFilterKeyBindings.isSilentSpyVisible()
-				? "<dark_green>[<color:#00ff40>Silent</color>]</dark_green>"
-				: "<dark_red>[<color:#FF1500>Silent</color>]</dark_red>");
+				? "<dark_green>[<color:#00ff40>" + SpyFilterConfig.getSilentNamed() + "</color>]</dark_green>"
+				: "<dark_red>[<color:#FF1500>" + SpyFilterConfig.getSilentNamed() + "</color>]</dark_red>");
 	}
 }
